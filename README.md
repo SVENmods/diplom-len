@@ -1,1 +1,1 @@
-# diplom-len
+# Diplom project
