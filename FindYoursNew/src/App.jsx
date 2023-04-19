@@ -1,19 +1,22 @@
 import { useState } from 'react'
-import './assets/css/App.css'
-import AuthenticationButton from './UI/buttons/AuthenticationButton'
+import './assets/css/App.scss'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from 'react';
 import axios from 'axios';
-import ProfilePic from './UI/user/ProfilePic';
+import Header from './UI/Header';
+import Nav from './UI/Nav';
+import Dashboard from './Pages/Dashboard';
 
 function App() {
   
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
   const [formData, setFormData] = useState({
     email:'',
     userId:'',
+    status:'',
+    role:''
   })
-
   
 
 
@@ -34,7 +37,7 @@ function App() {
     if (isAuthenticated && user) {
       const userSub = user.sub;
       const userId = userSub.substring(userSub.indexOf("|") + 1);
-      setFormData(prevState => ({ ...prevState, email: user.email, userId: userId }));
+      setFormData(prevState => ({ ...prevState, email: user.email, userId: userId, status: "не сформирован", role: 'user' }));
       fetchData(userId).then(async (foundKey) => {
         if (foundKey) {
           console.log("Found key:", foundKey);
@@ -44,6 +47,8 @@ function App() {
               formData: {
                 email: user.email,
                 userId: userId,
+                status: "не сформирован",
+                role: 'user'
               }
             });
             const success = response.status === 200;
@@ -59,26 +64,6 @@ function App() {
   }, [isAuthenticated, user]);
   
 
-  const handleLogin = async () => {
-    if (isAuthenticated) {
-      const response = await axios.post('http://localhost:8000/profiles', {
-        formData
-      })
-      const success = response.status === 200
-      if (success) {
-        console.log("YES")
-      }
-      
-      const foundKey = await fetchData(user.sub.substring(user.sub.indexOf("|") + 1));
-      if (foundKey) {
-        console.log("Found key:", foundKey);
-      } else {
-        console.log("Key not found.");
-      }
-    }
-    
-  }
-
   const handleDeleteAllProfiles = async () => {
     try {
       const response = await axios.delete('http://localhost:8000/profiles');
@@ -91,10 +76,25 @@ function App() {
   return (
     
       <div className="App">
-        <AuthenticationButton/>
-        <button onClick={handleLogin}>Login</button><br />
-        <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
-        <ProfilePic />
+        <BrowserRouter>
+          {/* {
+            isLoading && (
+              <div className="loader-wrapper">
+                <div className='d-flex flex-column align-items-center'>
+                  <div className="loader"></div>
+                  <p className='mt-5'>
+                    Минуточку, контент загружается :)
+                  </p>
+                </div>
+              </div>
+            )
+          } */}
+          <Header userData={formData}/>
+          <Routes>
+            <Route path="/" element={<Dashboard/>} />
+          </Routes>
+          <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
+        </BrowserRouter>
       </div>
       
     )

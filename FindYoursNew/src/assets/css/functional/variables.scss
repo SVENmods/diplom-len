@@ -1,0 +1,49 @@
+$minWidth: 320px;
+$maxWidth: 1920px;
+$maxWidthContainer: 1344;
+$mouse-device: '(hover: hover) and (pointer: fine)';
+// $maxWidthContainerPersonal: 1830;
+
+// *Colors*
+$color-background-main: #FEFEFE;
+$color-white: #FFFFFF;
+$color-blue-accent: #055687;
+$color-white-text: #FEFEFE;
+$color-blue-black: #063958;
+$color-blue-dark: #041E2F;
+$color-black: #000000;
+$color-modal-back: #28282870;
+$color-link-hover: #D6ACD4;
+// *------*
+
+
+// *! Fonts*
+$font-family-bold: 'Gilroy-Bold','Arial', sans-serif;
+$font-family-heavy: 'Gilroy-Heavy','Arial', sans-serif;
+$font-family-light: 'Gilroy-Light','Arial', sans-serif;
+$font-family-medium: 'Gilroy-Medium','Arial', sans-serif;
+$font-family-regular: 'Gilroy-Regular', 'Arial';
+
+$fontSize: 16px;
+// *!------*
+
+// *? Border*
+$border-top-25: 25px 25px 0px 0px;
+// *?------*
+
+// *! Transition *
+$transition-main-2: all ease-out .2s;
+$transition-main-3: all ease-out .3s;
+// *!------*
+
+
+// *? Media rules*
+$mouse-device: '(hover: hover) and (pointer: fine)';
+$ui-mobile: 'screen and (max-width: 650px)';
+$ui-tablet: 'screen and (max-width: 768px)';
+
+// *! z-indexs* 
+$layer-all-base: 2;
+$layer-ui-basic: 3; //header, footer, menu
+$layer-modal: 4;
+// *!------*

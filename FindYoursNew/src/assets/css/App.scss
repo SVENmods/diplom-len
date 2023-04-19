@@ -1,0 +1,49 @@
+//! main imports
+@import './functional/nullset.scss';
+@import './functional/variables.scss';
+@import './functional/mixins.scss';
+
+html{
+     height: auto;
+     scroll-behavior: smooth;
+}
+body, .App, #root{
+     font-size: $fontSize;
+     min-width: $minWidth;
+     display: flex;
+     flex-direction: column;
+     background: $color-background-main;
+     align-items: center;
+     min-height: 100vh;
+     width: 100%;
+}
+
+main{
+     flex-grow: 1;
+}
+
+:root{
+     font-size: 16px;
+}
+
+.content-container{
+     max-width: 84rem;
+     width: 100%;
+}
+
+.App{
+     padding: 0 48px;
+}
+
+a{
+     color: $color-black;
+     transition: $transition-main-2;
+     &:hover{
+          @media #{$mouse-device} {
+               color: $color-link-hover;
+               }
+          }
+     }
+
+//* etc. imports
+@import './components/loader.scss';

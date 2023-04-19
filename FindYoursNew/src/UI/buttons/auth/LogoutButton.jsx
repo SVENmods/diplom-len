@@ -20,7 +20,6 @@ const LogoutButton = () => {
           </clipPath>
         </defs>
       </svg>
-
     </div>
   );
 };
