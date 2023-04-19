@@ -4,13 +4,14 @@ import AuthenticationButton from './UI/buttons/AuthenticationButton'
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from 'react';
 import axios from 'axios';
+import ProfilePic from './UI/user/ProfilePic';
 
 function App() {
   
   const { user, isAuthenticated } = useAuth0();
   const [formData, setFormData] = useState({
     email:'',
-    userId:''
+    userId:'',
   })
 
   
@@ -93,6 +94,7 @@ function App() {
         <AuthenticationButton/>
         <button onClick={handleLogin}>Login</button><br />
         <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
+        <ProfilePic />
       </div>
       
     )
