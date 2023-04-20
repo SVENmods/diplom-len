@@ -13,7 +13,8 @@ const ProfilePic = (props) => {
           return (
           isAuthenticated &&(
                <>
-               <img src={user.picture} alt={user.name} className={props.customClass}/>
+               <img src={user.picture} className={props.customClass}/>
+               {/* alt={user.name} */}
                </>
           )
      );

@@ -13,6 +13,8 @@ function App() {
   
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [formData, setFormData] = useState({
+    name:'',
+    family_name:'',
     email:'',
     userId:'',
     status:'',
@@ -61,6 +63,8 @@ function App() {
             const response = await axios.post('http://localhost:8000/profiles', {
               formData: {
                 email: user.email,
+                name: user.given_name,
+                family_name: user.family_name,
                 userId: userId,
                 status: "Не сформирован",
                 role: 'user',
@@ -124,7 +128,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard/>} />
             <Route path="/profile" element={<ProfilePage/>} />
-            <Route path="/profile/edit" element={<ProfileEditPage userData={formData} onUserDataChange={handleUserDataChange }/>} />
+            <Route path="/profile/edit" element={<ProfileEditPage formData={formData} onUserDataChange={handleUserDataChange } userKey={userKey}/>} />
           </Routes>
           <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
         </BrowserRouter>
