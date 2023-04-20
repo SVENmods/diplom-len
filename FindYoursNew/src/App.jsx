@@ -5,8 +5,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from 'react';
 import axios from 'axios';
 import Header from './UI/Header';
-import Nav from './UI/Nav';
 import Dashboard from './Pages/Dashboard';
+import ProfilePage from './Pages/ProfilePage';
+import ProfileEditPage from './Pages/ProfileEditPage';
 
 function App() {
   
@@ -15,18 +16,32 @@ function App() {
     email:'',
     userId:'',
     status:'',
-    role:''
+    role:'',
+    birthday: '',
+    location: '', 
+    contacts: {},
+    links: {},
+    service: {},
+    allRate: {},
+    rateSum: '',
   })
-  
+  const [userKey, setUserKey] = useState()
+
+  const [allData, setAllData] = useState()
 
 
   useEffect(() => {
     const fetchData = async (userId) => {
       try {
-        const response = await axios.get(`http://localhost:8000/profiles`);
-        const data = response.data.data;
+        const response = await axios.get(`http://localhost:8000/profiles`)
+        const data = response.data.data
+        setAllData(response.data.data)
         console.log(data)
-        const foundKey = Object.keys(data).find(key => data[key].userId === userId);
+        const foundKey = Object.keys(data).find(key => data[key].userId === userId)
+        if (foundKey) {
+          setFormData(data[foundKey])
+          setUserKey(foundKey)
+        }
         return foundKey || null;
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -37,7 +52,7 @@ function App() {
     if (isAuthenticated && user) {
       const userSub = user.sub;
       const userId = userSub.substring(userSub.indexOf("|") + 1);
-      setFormData(prevState => ({ ...prevState, email: user.email, userId: userId, status: "не сформирован", role: 'user' }));
+      setFormData(prevState => ({ ...prevState, email: user.email }));
       fetchData(userId).then(async (foundKey) => {
         if (foundKey) {
           console.log("Found key:", foundKey);
@@ -47,13 +62,20 @@ function App() {
               formData: {
                 email: user.email,
                 userId: userId,
-                status: "не сформирован",
-                role: 'user'
+                status: "Не сформирован",
+                role: 'user',
+                birthday: '',
+                location: '',
+                contacts: {},
+                links: {},
+                service: {},
+                allRate: {},
+                rateSum: '',
               }
             });
             const success = response.status === 200;
             if (success) {
-              console.log("YES")
+              console.log("User created")
             }
           } catch (error) {
             console.error("Error posting data:", error);
@@ -72,6 +94,8 @@ function App() {
       console.error(error);
     }
   }
+
+  
 
   return (
     
@@ -92,6 +116,8 @@ function App() {
           <Header userData={formData}/>
           <Routes>
             <Route path="/" element={<Dashboard/>} />
+            <Route path="/profile" element={<ProfilePage/>} />
+            <Route path="/profile/edit" element={<ProfileEditPage/>} />
           </Routes>
           <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
         </BrowserRouter>

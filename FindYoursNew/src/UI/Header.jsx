@@ -5,16 +5,15 @@ import '../assets/css/components/header.scss'
 import HeaderProfile from './user/HeaderProfile';
 
 
-const Header = (props) => {
+const Header = ({userData}) => {
      return (
           <header className="d-flex flex-row align-items-center justify-content-between content-container">
                <a href='/' className='d-flex flex-row align-items-center'>
                     <img src={logo} alt="logo"></img>
                     <span className='ms-3'>FindYours</span>
                </a>
-               {props.role}
                <Nav/>
-               <HeaderProfile/>
+               <HeaderProfile userData={userData}/>
                <AuthenticationButton/>
           </header>
      );
