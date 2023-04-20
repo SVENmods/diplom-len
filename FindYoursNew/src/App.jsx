@@ -35,7 +35,7 @@ function App() {
       try {
         const response = await axios.get(`http://localhost:8000/profiles`)
         const data = response.data.data
-        setAllData(response.data.data)
+        // setAllData(response.data.data)
         console.log(data)
         const foundKey = Object.keys(data).find(key => data[key].userId === userId)
         if (foundKey) {
@@ -81,8 +81,10 @@ function App() {
             console.error("Error posting data:", error);
           }
         }
-      });
-    }
+      })
+    };
+    console.log("User data", formData)
+
   }, [isAuthenticated, user]);
   
 
@@ -95,7 +97,12 @@ function App() {
     }
   }
 
-  
+  const handleUserDataChange  = (newUserData) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      ...newUserData,
+    }))
+  }
 
   return (
     
@@ -117,7 +124,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard/>} />
             <Route path="/profile" element={<ProfilePage/>} />
-            <Route path="/profile/edit" element={<ProfileEditPage/>} />
+            <Route path="/profile/edit" element={<ProfileEditPage userData={formData} onUserDataChange={handleUserDataChange }/>} />
           </Routes>
           <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
         </BrowserRouter>
