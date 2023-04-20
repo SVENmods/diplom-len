@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
+import InputMask from "react-input-mask";
 
 const ProfileEditPage = ({formData, onUserDataChange, userKey}) => {
 
@@ -26,32 +27,45 @@ const ProfileEditPage = ({formData, onUserDataChange, userKey}) => {
 
      useEffect(()=>{
           document.querySelector('#birthday').max = new Date().toISOString().split("T")[0];
-
+          mapLocation
      },[])
 
      return (
           <main>
                <form onSubmit={handleSubmit} className="d-flex flex-column">
-                    <div className="d-flex flex-row">
+                    <div className="d-flex flex-row align-items-center">
                          <label htmlFor="name">Имя</label>
                          <input type="text" value={formData?.name} name="name" id="name" onChange={handleChange}/>
                     </div>
-                    <div className="d-flex flex-row">
+                    <div className="d-flex flex-row align-items-center">
                          <label htmlFor="family_name">Фамилия</label>
                          <input type="text" value={formData?.family_name} name="family_name" id="family_name" onChange={handleChange}/>
                     </div>
-                    <div className="d-flex flex-row">
+                    <div className="d-flex flex-row align-items-center">
                          <label htmlFor="birthday">Дата рождения</label>
                          <input type="date" value={formData?.birthday} name="birthday" id="birthday" onChange={handleChange}/>
                     </div>
-                    <div className="d-flex flex-row">
-                    <select name="location">
-                         {mapLocation.map((data, index) => (
-                         <option key={index} value={data}>
-                         {data}
-                         </option>
-                         ))}
-                    </select>
+                    <div className="d-flex flex-row align-items-center">
+                         <label htmlFor="location">Город</label>
+                         <select name="location" onChange={handleChange} id="location">
+                              <option value={formData?.location} name="location" defaultValue={formData?.location} disabled={true}>{formData?.location}</option>
+                              {mapLocation.map((data, index) => (
+                              <option key={index} value={data} name="location">
+                              {data}
+                              </option>
+                              ))}
+                         </select>
+                    </div>
+                    <div className="d-flex flex-row align-items-center">
+                         <label htmlFor="tel">Телефон</label>
+                         <InputMask
+                              mask="+(999) 99-999-99-99"
+                              maskChar=""
+                              id="tel"
+                              type="tel"
+                              placeholder="+(123) 45-678-91-12"
+                              onChange={handleChange}
+                         />
                     </div>
                     <input type="submit" value="submit" />
                </form>

@@ -26,6 +26,7 @@ function App() {
     service: {},
     allRate: {},
     rateSum: '',
+    tel: '',
   })
   const [userKey, setUserKey] = useState()
 
@@ -75,6 +76,7 @@ function App() {
                 service: {},
                 allRate: {},
                 rateSum: '',
+                tel: '',
               }
             });
             const success = response.status === 200;
