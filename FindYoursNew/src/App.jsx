@@ -8,6 +8,7 @@ import Header from './UI/Header';
 import Dashboard from './Pages/Dashboard';
 import ProfilePage from './Pages/ProfilePage';
 import ProfileEditPage from './Pages/ProfileEditPage';
+import ProfileEditPageAbout from './Pages/ProfileEditPageAbout';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -29,6 +30,12 @@ function App() {
     allRate: {},
     rateSum: '',
     tel: '',
+    about:{
+      text: "",
+      skills: [],
+      lang: "",
+    },
+    experiens: []
   })
   const [userKey, setUserKey] = useState()
 
@@ -85,6 +92,12 @@ function App() {
                 allRate: {},
                 rateSum: '',
                 tel: '',
+                about:{
+                  text: "",
+                  skills: [],
+                  lang: "",
+                },
+                experiens: []
               }
             });
             const success = response.status === 200;
@@ -169,8 +182,9 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Dashboard/>} />
-            <Route path="/profile" element={<ProfilePage/>} />
-            <Route path="/profile/edit" element={<ProfileEditPage formData={formData} onUserDataChange={handleUserDataChange } userKey={userKey}/>} />
+            <Route path="/profile" element={<ProfilePage formData={formData}/>} />
+            <Route path="/profile/edit/personal" element={<ProfileEditPage formData={formData} onUserDataChange={handleUserDataChange } userKey={userKey}/>} />
+            <Route path="/profile/edit/about" element={<ProfileEditPageAbout formData={formData} onUserDataChange={handleUserDataChange } userKey={userKey}/>} />
           </Routes>
           <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
         </BrowserRouter>
