@@ -8,6 +8,8 @@ import Header from './UI/Header';
 import Dashboard from './Pages/Dashboard';
 import ProfilePage from './Pages/ProfilePage';
 import ProfileEditPage from './Pages/ProfileEditPage';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 
 function App() {
   
@@ -33,7 +35,13 @@ function App() {
   const [allData, setAllData] = useState()
 
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
   useEffect(() => {
+    // setShow(true)
     const fetchData = async (userId) => {
       try {
         const response = await axios.get(`http://localhost:8000/profiles`)
@@ -127,6 +135,38 @@ function App() {
             )
           } */}
           <Header userData={formData}/>
+
+          <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+            centered
+            >
+            <Modal.Header>
+            {/* closeButton */}
+              <Modal.Title className='w-100 d-flex align-items-center text-center'>
+                Приветствуем Вас в сервисе FindYours!
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <div className="w-100 text-center">
+                Определите свою роль(ее можно будет сменить в профиле, если вдруг передумаете)
+              </div>
+              <div className="d-flex flex-row w-100 justify-content-between mt-4">
+                <button>Специалист</button>
+                <button>Работадатель</button>
+                <button>Пользователь</button>
+              </div>
+            </Modal.Body>
+            {/* <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary">Understood</Button>
+            </Modal.Footer> */}
+          </Modal>
+
           <Routes>
             <Route path="/" element={<Dashboard/>} />
             <Route path="/profile" element={<ProfilePage/>} />

@@ -64,6 +64,8 @@ const ProfileEditPage = ({formData, onUserDataChange, userKey}) => {
                               id="tel"
                               type="tel"
                               placeholder="+(123) 45-678-91-12"
+                              value={formData?.tel}
+                              name="tel"
                               onChange={handleChange}
                          />
                     </div>
