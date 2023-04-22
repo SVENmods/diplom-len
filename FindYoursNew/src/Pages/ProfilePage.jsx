@@ -7,12 +7,12 @@ const ProfilePage = ({formData}) => {
           <main>
           <h1 className="h1">Мой профиль</h1>
           <div className="content-box">
-               <h3 className="h3">{formData?.name} {formData?.family_name}</h3>
+               <h2 className="h2">{formData?.name} {formData?.family_name}</h2>
                <br />
                <a href="/profile/edit/personal">редактировать</a>
           </div>
           <div className="content-box">
-               <h3 className="h3">О себе</h3>
+               <h2 className="h2">О себе</h2>
                <a href="/profile/edit/about">редактировать</a>
                {
                     formData?.about?.text && (
