@@ -60,7 +60,6 @@ const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
           if(formData?.about.skills){
                setNewSkill([...formData?.about.skills])
           }
-          
      },[])
 
      return (
@@ -79,7 +78,6 @@ const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
                                    ))
                               }
                               </div>
-
                          <input type="text" name="newSkill" id="newSkill" placeholder="Введите навык" />
                          <button type="button" onClick={handleAddSkill} id="addNewSkill" className=""><i className="bi bi-check2"></i></button>
                     </div>

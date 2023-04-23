@@ -27,7 +27,6 @@ const ProfileEditPage = ({formData, onUserDataChange, userKey}) => {
 
      useEffect(()=>{
           document.querySelector('#birthday').max = new Date().toISOString().split("T")[0];
-          mapLocation
      },[])
 
      return (

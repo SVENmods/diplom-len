@@ -9,6 +9,7 @@ import Dashboard from './Pages/Dashboard';
 import ProfilePage from './Pages/ProfilePage';
 import ProfileEditPage from './Pages/ProfileEditPage';
 import ProfileEditPageAbout from './Pages/ProfileEditPageAbout';
+import ProfileExperiens from './Pages/ProfileExperiens';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 
@@ -35,11 +36,15 @@ function App() {
       skills: [],
       lang: "",
     },
-    experiens: []
+    experiens: {
+      
+    },
   })
   const [userKey, setUserKey] = useState()
 
   const [allData, setAllData] = useState()
+
+  const [role, setRole] = useState('')
 
 
   const [show, setShow] = useState(false);
@@ -48,17 +53,16 @@ function App() {
 
 
   useEffect(() => {
-    // setShow(true)
+    
     const fetchData = async (userId) => {
       try {
-        const response = await axios.get(`http://localhost:8000/profiles`)
-        const data = response.data.data
-        // setAllData(response.data.data)
-        console.log(data)
-        const foundKey = Object.keys(data).find(key => data[key].userId === userId)
+        const response = await axios.get(`http://localhost:8000/profiles`);
+        const data = response.data.data;
+        const foundKey = Object.keys(data).find(key => data[key].userId === userId);
         if (foundKey) {
-          setFormData(data[foundKey])
-          setUserKey(foundKey)
+          setFormData(data[foundKey]);
+          setUserKey(foundKey);
+          setRole(data[foundKey].role)
         }
         return foundKey || null;
       } catch (error) {
@@ -66,8 +70,9 @@ function App() {
         return null;
       }
     };
-  
+
     if (isAuthenticated && user) {
+      
       const userSub = user.sub;
       const userId = userSub.substring(userSub.indexOf("|") + 1);
       setFormData(prevState => ({ ...prevState, email: user.email }));
@@ -75,45 +80,22 @@ function App() {
         if (foundKey) {
           console.log("Found key:", foundKey);
         } else {
-          try {
-            const response = await axios.post('http://localhost:8000/profiles', {
-              formData: {
-                email: user.email,
-                name: user.given_name,
-                family_name: user.family_name,
-                userId: userId,
-                status: "Не сформирован",
-                role: 'user',
-                birthday: '',
-                location: '',
-                contacts: {},
-                links: {},
-                service: {},
-                allRate: {},
-                rateSum: '',
-                tel: '',
-                about:{
-                  text: "",
-                  skills: [],
-                  lang: "",
-                },
-                experiens: []
-              }
-            });
-            const success = response.status === 200;
-            if (success) {
-              console.log("User created")
-            }
-          } catch (error) {
-            console.error("Error posting data:", error);
-          }
+          setShow(true);
         }
       })
     };
-    console.log("User data", formData)
+    console.log("User data", formData);
 
   }, [isAuthenticated, user]);
   
+
+  const handleSetRole = (role) => {
+    // setFormData(prevState => ({ ...prevState, role: role }));
+    const userSub = user.sub;
+    const userId = userSub.substring(userSub.indexOf("|") + 1);
+    createNewProfile(role, userId);
+    setShow(false);
+  };
 
   const handleDeleteAllProfiles = async () => {
     try {
@@ -129,6 +111,45 @@ function App() {
       ...prevState,
       ...newUserData,
     }))
+  }
+
+  const createNewProfile = async (role, userId) =>{
+    if (isAuthenticated && user) {
+        try {
+        const response = await axios.post('http://localhost:8000/profiles', {
+          formData: {
+            email: user.email,
+            name: user.given_name,
+            family_name: user.family_name,
+            userId: userId,
+            status: "Не сформирован",
+            role: role,
+            birthday: '',
+            location: '',
+            contacts: {},
+            links: {},
+            service: {},
+            allRate: {},
+            rateSum: '',
+            tel: '',
+            about:{
+              text: "",
+              skills: [],
+              lang: "",
+            },
+            experiens: {}
+          }
+        });
+        const success = response.status === 200;
+        if (success) {
+          console.log("User created");
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("Error posting data:", error);
+      }
+    }
+    
   }
 
   return (
@@ -147,7 +168,7 @@ function App() {
               </div>
             )
           } */}
-          <Header userData={formData}/>
+          <Header userData={formData} role={role}/>
 
           <Modal
             show={show}
@@ -167,9 +188,9 @@ function App() {
                 Определите свою роль(ее можно будет сменить в профиле, если вдруг передумаете)
               </div>
               <div className="d-flex flex-row w-100 justify-content-between mt-4">
-                <button>Специалист</button>
-                <button>Работадатель</button>
-                <button>Пользователь</button>
+                <button onClick={() => handleSetRole('spec')}>Специалист</button>
+                <button onClick={() => handleSetRole('employee')}>Работодатель</button>
+                {/* <button>Пользователь</button> */}
               </div>
             </Modal.Body>
             {/* <Modal.Footer>
@@ -181,10 +202,39 @@ function App() {
           </Modal>
 
           <Routes>
-            <Route path="/" element={<Dashboard/>} />
-            <Route path="/profile" element={<ProfilePage formData={formData}/>} />
-            <Route path="/profile/edit/personal" element={<ProfileEditPage formData={formData} onUserDataChange={handleUserDataChange } userKey={userKey}/>} />
-            <Route path="/profile/edit/about" element={<ProfileEditPageAbout formData={formData} onUserDataChange={handleUserDataChange } userKey={userKey}/>} />
+            <Route 
+              path="/" 
+              element={<Dashboard/>} />
+            <Route 
+              path="/profile" 
+              element={<ProfilePage 
+              formData={formData}/>} />
+            <Route 
+              path="/profile/edit/personal" 
+              element={<ProfileEditPage 
+              formData={formData} 
+              onUserDataChange={handleUserDataChange } 
+              userKey={userKey}/>} />
+            <Route 
+              path="/profile/edit/about" 
+              element={<ProfileEditPageAbout 
+              formData={formData} 
+              onUserDataChange={handleUserDataChange } 
+              userKey={userKey}/>} />
+            <Route 
+              path="/profile/add/experiens" 
+              element={<ProfileExperiens 
+              formData={formData} 
+              onUserDataChange={handleUserDataChange } 
+              userKey={userKey}/>} />
+            <Route
+              path="/profile/edit/experiens/:id"
+              element={<ProfileExperiens 
+              formData={formData} 
+              onUserDataChange={handleUserDataChange } 
+              userKey={userKey}
+              editMode={true}/>}
+            />
           </Routes>
           <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
         </BrowserRouter>
