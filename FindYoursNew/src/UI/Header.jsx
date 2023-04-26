@@ -1,5 +1,4 @@
 import Nav from './Nav';
-import AuthenticationButton from './buttons/AuthenticationButton'
 import logo from '/img/logo2.png'
 import '../assets/css/components/header.scss'
 import HeaderProfile from './user/HeaderProfile';
@@ -14,7 +13,6 @@ const Header = ({userData, role}) => {
                </a>
                <Nav role={role}/>
                <HeaderProfile userData={userData}/>
-               <AuthenticationButton/>
           </header>
      );
 }

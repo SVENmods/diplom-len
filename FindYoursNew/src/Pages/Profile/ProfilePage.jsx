@@ -1,5 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import ProfileViewExperiens from "../UI/output/ProfileViewExperiens";
+import ProfileViewExperiens from '../../UI/output/ProfileViewExperiens';
 
 const ProfilePage = ({formData}) => {
      const {user} = useAuth0()

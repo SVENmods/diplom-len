@@ -3,15 +3,16 @@ import './assets/css/App.scss'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from 'react';
-import axios from 'axios';
+import axios, { all } from 'axios';
 import Header from './UI/Header';
 import Dashboard from './Pages/Dashboard';
-import ProfilePage from './Pages/ProfilePage';
-import ProfileEditPage from './Pages/ProfileEditPage';
-import ProfileEditPageAbout from './Pages/ProfileEditPageAbout';
-import ProfileExperiens from './Pages/ProfileExperiens';
+import ProfilePage from './Pages/Profile/ProfilePage';
+import ProfileEditPage from './Pages/Profile/ProfileEditPage';
+import ProfileEditPageAbout from './Pages/Profile/ProfileEditPageAbout';
+import ProfileExperiens from './Pages/Profile/ProfileExperiens';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import Selection from './Pages/Selection';
 
 function App() {
   
@@ -42,8 +43,6 @@ function App() {
   })
   const [userKey, setUserKey] = useState()
 
-  const [allData, setAllData] = useState()
-
   const [role, setRole] = useState('')
 
 
@@ -66,13 +65,12 @@ function App() {
         }
         return foundKey || null;
       } catch (error) {
-        console.error("Error fetching data:", error);
+          console.error("Error fetching data:", error);
         return null;
       }
     };
 
     if (isAuthenticated && user) {
-      
       const userSub = user.sub;
       const userId = userSub.substring(userSub.indexOf("|") + 1);
       setFormData(prevState => ({ ...prevState, email: user.email }));
@@ -84,8 +82,7 @@ function App() {
         }
       })
     };
-    console.log("User data", formData);
-
+    // console.log("User data", formData);
   }, [isAuthenticated, user]);
   
 
@@ -119,8 +116,8 @@ function App() {
         const response = await axios.post('http://localhost:8000/profiles', {
           formData: {
             email: user.email,
-            name: user.given_name,
-            family_name: user.family_name,
+            name: user?.given_name,
+            family_name: user?.family_name,
             userId: userId,
             status: "Не сформирован",
             role: role,
@@ -149,7 +146,6 @@ function App() {
         console.error("Error posting data:", error);
       }
     }
-    
   }
 
   return (
@@ -193,47 +189,56 @@ function App() {
                 {/* <button>Пользователь</button> */}
               </div>
             </Modal.Body>
-            {/* <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                Close
-              </Button>
-              <Button variant="primary">Understood</Button>
-            </Modal.Footer> */}
           </Modal>
 
           <Routes>
             <Route 
               path="/" 
-              element={<Dashboard/>} />
+              element={
+              <Dashboard/>} />
             <Route 
               path="/profile" 
-              element={<ProfilePage 
+              element={
+              <ProfilePage 
               formData={formData}/>} />
             <Route 
               path="/profile/edit/personal" 
-              element={<ProfileEditPage 
+              element={
+              <ProfileEditPage 
               formData={formData} 
               onUserDataChange={handleUserDataChange } 
               userKey={userKey}/>} />
             <Route 
               path="/profile/edit/about" 
-              element={<ProfileEditPageAbout 
+              element={
+              <ProfileEditPageAbout 
               formData={formData} 
               onUserDataChange={handleUserDataChange } 
               userKey={userKey}/>} />
             <Route 
               path="/profile/add/experiens" 
-              element={<ProfileExperiens 
+              element={
+              <ProfileExperiens 
               formData={formData} 
               onUserDataChange={handleUserDataChange } 
               userKey={userKey}/>} />
             <Route
               path="/profile/edit/experiens/:id"
-              element={<ProfileExperiens 
+              element={
+              <ProfileExperiens 
               formData={formData} 
               onUserDataChange={handleUserDataChange } 
               userKey={userKey}
               editMode={true}/>}
+            />
+            <Route
+              path="/selection"
+              element={
+              <Selection 
+                // allData={allData} 
+              // onUserDataChange={handleUserDataChange } 
+              // userKey={userKey}
+              />}
             />
           </Routes>
           <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
