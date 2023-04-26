@@ -2,12 +2,24 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import InputMask from "react-input-mask";
+import Select from "../../UI/select/Select";
 
 const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
 
      const navigate = useNavigate()
 
+     const [selectedSphere, setSelectedSphere] = useState("");
+
      const [newSkill, setNewSkill] = useState([])
+
+     const allSphere = ['Айти', 'Строительство', 'Транспорт, логистика', 'Финансы']
+
+     const allArea = {
+          'Айти' : ['Дизайн', 'Front-end', 'Back-end', 'Аналитика', 'DevOps', 'Верстка'],
+          'Строительство' : ['Архитектора', 'Разнрабочий',  'Монтаж', 'Сантехник', 'Электромонтаж',],
+          'Транспорт, логистика' : ['Водитель', 'Грузчик', 'Курьер', 'Начальник Склада', 'Упаковщик'],
+          'Финансы' : ['Брокер', 'Бухгалтер', 'Экономист', 'Аудитор', 'Кредитный специалист',], 
+     }
 
      const handleChange = (e) => {
      const { name, value } = e.target
@@ -56,9 +68,21 @@ const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
           }
      };
 
+     const handleSphereChange = (event) => {
+          setSelectedSphere(event.target.value);
+          onUserDataChange({ ...formData, about: { ...formData.about, sphere: event.target.value } });
+     };
+     
+     const handleAreaChange = (event) => {
+          onUserDataChange({ ...formData, about: { ...formData.about, area: event.target.value } });
+     };
+
      useEffect(()=>{
           if(formData?.about.skills){
                setNewSkill([...formData?.about.skills])
+          }
+          if(formData?.about.sphere){
+               setSelectedSphere(formData?.about.sphere)
           }
      },[])
 
@@ -69,6 +93,27 @@ const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
                          <label htmlFor="about.text">О себе</label>
                          <textarea type="text" value={formData?.about.text} name="about.text" id="about.text" onChange={handleChange}/>
                     </div>
+                    <div className="d-flex flex-row align-items-center border">
+                         <Select
+                              options = {allSphere}
+                              label = {"Выберите сферу"}
+                              value = {formData.about.sphere}
+                              onChange = {handleSphereChange}
+                              name = {'about.sphere'}
+                         />
+                    </div>
+
+                    {allArea[formData.about.sphere] && (
+                    <div className="d-flex flex-row align-items-center border">
+                         <Select
+                              options = {allArea[formData.about.sphere]}
+                              label = {"Выберите направление"}
+                              value = {formData.about.area}
+                              onChange = {handleAreaChange}
+                              name = {'about.area'}
+                         />
+                    </div>
+                    )}
                     <div className="d-flex flex-row align-items-center border">
                          <label htmlFor="newSkill">Профессиональнальные компетенции</label>
                               <div className="d-flex flex-row flex-wrap border">

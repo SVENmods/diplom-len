@@ -3,7 +3,7 @@ import './assets/css/App.scss'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect } from 'react';
-import axios, { all } from 'axios';
+import axios from 'axios';
 import Header from './UI/Header';
 import Dashboard from './Pages/Dashboard';
 import ProfilePage from './Pages/Profile/ProfilePage';
@@ -13,6 +13,7 @@ import ProfileExperiens from './Pages/Profile/ProfileExperiens';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Selection from './Pages/Selection';
+import ProfileShow from './Pages/Profile/ProfileShow';
 
 function App() {
   
@@ -36,6 +37,7 @@ function App() {
       text: "",
       skills: [],
       lang: "",
+      sphere: "",
     },
     experiens: {
       
@@ -78,6 +80,9 @@ function App() {
         if (foundKey) {
           console.log("Found key:", foundKey);
         } else {
+          if(userId === "103223268131768123604"){
+            setRole('admin')
+          }
           setShow(true);
         }
       })
@@ -90,7 +95,13 @@ function App() {
     // setFormData(prevState => ({ ...prevState, role: role }));
     const userSub = user.sub;
     const userId = userSub.substring(userSub.indexOf("|") + 1);
+    // if(userId === "103223268131768123604"){
+    //   createNewProfile('admin', userId);
+    // }
+    // else{
+    // }
     createNewProfile(role, userId);
+
     setShow(false);
   };
 
@@ -116,8 +127,8 @@ function App() {
         const response = await axios.post('http://localhost:8000/profiles', {
           formData: {
             email: user.email,
-            name: user?.given_name,
-            family_name: user?.family_name,
+            name: user.given_name ? user?.given_name : user.email.split("@")[0],
+            family_name: user.family_name ? user.family_name : '',
             userId: userId,
             status: "Не сформирован",
             role: role,
@@ -183,11 +194,22 @@ function App() {
               <div className="w-100 text-center">
                 Определите свою роль(ее можно будет сменить в профиле, если вдруг передумаете)
               </div>
-              <div className="d-flex flex-row w-100 justify-content-between mt-4">
-                <button onClick={() => handleSetRole('spec')}>Специалист</button>
-                <button onClick={() => handleSetRole('employee')}>Работодатель</button>
-                {/* <button>Пользователь</button> */}
-              </div>
+              {
+                role === 'admin' ? (
+                  <div className="d-flex flex-row w-100 justify-content-center mt-4">
+                    <button onClick={() => handleSetRole('admin')}>Администратор</button>
+                  </div>
+                  
+                )
+                :
+                  (
+                    <div className="d-flex flex-row w-100 justify-content-between mt-4">
+                    <button onClick={() => handleSetRole('spec')}>Специалист</button>
+                    <button onClick={() => handleSetRole('employee')}>Работодатель</button>
+                    {/* <button>Пользователь</button> */}
+                  </div>
+                  )
+              }
             </Modal.Body>
           </Modal>
 
@@ -239,6 +261,11 @@ function App() {
               // onUserDataChange={handleUserDataChange } 
               // userKey={userKey}
               />}
+            />
+            <Route
+              path="/show/profile/:id"
+              element={
+              <ProfileShow/>}
             />
           </Routes>
           <button onClick={handleDeleteAllProfiles}>Delete all</button><br />

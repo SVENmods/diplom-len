@@ -8,9 +8,10 @@ const Nav = ({role}) => {
                <a href="/">Вакансии</a>
                {/* <a href="">Мои запросы</a> */}
                {
-                    role === "employee" && (
+                    role === "employee" || role === "admin" ? (
                          <a href="/selection">Подбор сотрудника</a>
                     )
+                    : null
                }
                
           </nav>
