@@ -14,6 +14,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Selection from './Pages/Selection';
 import ProfileShow from './Pages/Profile/ProfileShow';
+import ComparePage from './Pages/ComparePage';
 
 function App() {
   
@@ -46,6 +47,8 @@ function App() {
   const [userKey, setUserKey] = useState()
 
   const [role, setRole] = useState('')
+
+  const [addToCheck, setAddToCheck] = useState([])
 
 
   const [show, setShow] = useState(false);
@@ -256,10 +259,16 @@ function App() {
             <Route
               path="/selection"
               element={
-              <Selection 
-                // allData={allData} 
-              // onUserDataChange={handleUserDataChange } 
-              // userKey={userKey}
+              <Selection
+              addToCheck = {addToCheck}
+              setAddToCheck = {setAddToCheck}
+              />}
+            />
+            <Route
+              path="/compare"
+              element={
+              <ComparePage
+              addToCheck = {addToCheck}
               />}
             />
             <Route

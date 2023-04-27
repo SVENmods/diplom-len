@@ -3,7 +3,7 @@ import { useState } from "react";
 import useDebounce from '../hooks/useDebounce';
 import Select from "../UI/select/Select";
 
-const Selection = () => {
+const Selection = ({addToCheck, setAddToCheck}) => {
 
      const [searchText, setSearchText] = useState({
           sphere: '',
@@ -27,10 +27,12 @@ const Selection = () => {
      // };
 
      const handleSphereChange = (e) => {
+          setAddToCheck([])
           setSearchText({...searchText, sphere: e.target.value, area: ''});
      };
 
      const handleAreaChange = (e) => {
+          setAddToCheck([])
           setSearchText({...searchText, area: e.target.value});
      };
 
@@ -63,7 +65,10 @@ const Selection = () => {
           </div>
           <AllProfileView
                searchText={debouncedSearch}
+               setAddToCheck = {setAddToCheck}
+               addToCheck = {addToCheck}
           />
+          <a href="/compare" className="ms-5 border p-2 rounded"><i className="bi bi-table me-2"></i>В сравнении: {addToCheck.length}</a>
      </main>
      );
 }
