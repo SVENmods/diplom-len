@@ -2,6 +2,7 @@ import AllProfileView from "../UI/output/AllProfileView";
 import { useState } from "react";
 import useDebounce from '../hooks/useDebounce';
 import Select from "../UI/select/Select";
+import { Link } from "react-router-dom";
 
 const Selection = ({addToCheck, setAddToCheck}) => {
 
@@ -36,9 +37,15 @@ const Selection = ({addToCheck, setAddToCheck}) => {
           setSearchText({...searchText, area: e.target.value});
      };
 
+
+     const clearLocalStorage = () => {
+          localStorage.clear()
+          setAddToCheck([])
+     }
+
      
      return (
-     <main className="d-flex flex-row align-items-start">
+     <main className="d-flex flex-row align-items-start pt-5">
           <div className="search-form d-flex flex-column me-5">
                {/* <div className="d-flex flex-column">
                     <label htmlFor="main-search">Поиск</label>
@@ -58,6 +65,7 @@ const Selection = ({addToCheck, setAddToCheck}) => {
                               label = {"Выберите направление"}
                               onChange = {handleAreaChange}
                               name = {'area'}
+                              customClass = ""
                     />
                     )}
                     
@@ -68,7 +76,19 @@ const Selection = ({addToCheck, setAddToCheck}) => {
                setAddToCheck = {setAddToCheck}
                addToCheck = {addToCheck}
           />
-          <a href="/compare" className="ms-5 border p-2 rounded"><i className="bi bi-table me-2"></i>В сравнении: {addToCheck.length}</a>
+          <div className="ms-5 d-flex flex-row rounded border align-items-center justify-content-center">
+               <Link to={{ 
+                    pathname: "/compare", 
+                    state: { addToCheck: addToCheck } }} 
+                    className="p-2">
+                         <i className="bi bi-table me-2"></i>
+                         В сравнении: 
+                         <span className="ms-1">{addToCheck.length}</span>
+               </Link>
+               <a className="ms-4 border-start d-flex p-2" role="button" onClick={() => clearLocalStorage()}>
+                    <i className="bi bi-trash"></i>
+               </a>
+          </div>
      </main>
      );
 }

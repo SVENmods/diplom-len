@@ -269,6 +269,7 @@ function App() {
               element={
               <ComparePage
               addToCheck = {addToCheck}
+              setAddToCheck = {setAddToCheck}
               />}
             />
             <Route

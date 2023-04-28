@@ -6,8 +6,6 @@ const AllProfileView = ({searchText, setAddToCheck, addToCheck}) => {
 
      const [allData, setAllData] = useState()
 
-     const [savedAddToCheck, setSavedAddToCheck] = useState([])
-
      const fetchData = async () => {
           try {
                const response = await axios.get(`http://localhost:8000/profiles`);
@@ -17,24 +15,31 @@ const AllProfileView = ({searchText, setAddToCheck, addToCheck}) => {
           }
      };
 
-     const handleAddToCheck = (e) =>{
-          console.log("addToCheck", addToCheck)
+     const handleAddToCheck = (e) => {
           const val = e.target.value;
           const checked = e.target.checked;
           if (checked) {
                if (!addToCheck.includes(val)) {
-                    setAddToCheck([...addToCheck, val]);
-               }
+                    const updatedAddToCheck = [...addToCheck, val];
+                    setAddToCheck(updatedAddToCheck);
+                    localStorage.setItem('addToCheck', JSON.stringify(updatedAddToCheck));
+          }
           } else {
-               setAddToCheck(addToCheck.filter((item) => item !== val));
+               const updatedAddToCheck = addToCheck.filter((item) => item !== val);
+               setAddToCheck(updatedAddToCheck);
+               localStorage.setItem('addToCheck', JSON.stringify(updatedAddToCheck));
           }
      }
 
      useEffect(()=>{
           fetchData();
-          console.log('allData', allData)
           // setSavedAddToCheck(addToCheck)
      },[])
+
+     useEffect(() => {
+          const savedAddToCheck = JSON.parse(localStorage.getItem('addToCheck')) || [];
+          setAddToCheck(savedAddToCheck);
+     },[setAddToCheck])
 
      if (!allData) {
           return <div className="loader"></div>
@@ -50,8 +55,8 @@ const AllProfileView = ({searchText, setAddToCheck, addToCheck}) => {
                     return sphereMatch && areaMatch;
                })
                     .map(([id, user]) => (
-                    <div key={id} className="d-flex flex-row align-items-start border mt-3 p-2">
-                         <input type="checkbox" name="addToCheck"className="mt-2 me-3" onChange={handleAddToCheck} value={id} role="button"/>
+                    <div key={id} className="d-flex flex-row align-items-start border mb-3 p-2">
+                         <input type="checkbox" name="addToCheck"className="mt-2 me-3" onChange={handleAddToCheck} value={id} role="button" checked={addToCheck.includes(id)}/>
                          {/* checked={savedAddToCheck.includes(id)} */}
                          <div className="d-flex flex-column">
                               <div className="d-flex flex-row align-items-center justify-content-between">
@@ -62,7 +67,6 @@ const AllProfileView = ({searchText, setAddToCheck, addToCheck}) => {
                               </div>
                               <span>{id}</span>
                               <span>{user.email}</span>
-                              
                          </div>
                     </div>
                ))}
