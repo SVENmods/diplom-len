@@ -15,6 +15,7 @@ import Button from 'react-bootstrap/Button';
 import Selection from './Pages/Selection';
 import ProfileShow from './Pages/Profile/ProfileShow';
 import ComparePage from './Pages/ComparePage';
+import ProfileServicePage from './Pages/Profile/ProfileServicePage';
 
 function App() {
   
@@ -148,7 +149,7 @@ function App() {
               skills: [],
               lang: "",
             },
-            experiens: {}
+            experiens: {},
           }
         });
         const success = response.status === 200;
@@ -256,6 +257,13 @@ function App() {
               userKey={userKey}
               editMode={true}/>}
             />
+            <Route 
+              path="/profile/service" 
+              element={
+              <ProfileServicePage
+              formData={formData} 
+              onUserDataChange={handleUserDataChange } 
+              userKey={userKey}/>} />
             <Route
               path="/selection"
               element={
