@@ -26,7 +26,7 @@ const ProfileEditPage = ({formData, onUserDataChange, userKey}) => {
           }
      };
 
-     if(!formData.name){
+     if(!userKey){
           return (
                <ContentLoader/>
           )
