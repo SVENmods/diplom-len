@@ -58,7 +58,7 @@ const AllProfileView = ({searchText, setAddToCheck, addToCheck, role}) => {
           .filter(([id, user]) => {
                const sphereMatch = !searchText.sphere || user?.about?.sphere?.toLowerCase().includes(searchText.sphere.toLowerCase());
                const areaMatch = !searchText.area || user?.about?.area?.toLowerCase().includes(searchText.area.toLowerCase());
-               return sphereMatch && areaMatch;
+               return sphereMatch && areaMatch && user.role === "spec";
           })
           .map(([id, user]) => (
                     <div key={id} className="border d-flex flex-column mb-3 p-3 rounded w-100">
