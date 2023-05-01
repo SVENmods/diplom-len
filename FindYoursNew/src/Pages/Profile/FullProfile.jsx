@@ -56,7 +56,9 @@ const FullProfile = ({formData, compareShow, role}) => {
 
                          </div>
                          <div className="col-md-6">
-                              <div className="content-box">
+                              {
+                                   role=== "admin" || role==="spec" || role === undefined && (
+                                        <div className="content-box">
                                    <div className="d-flex flex-row w-100 justify-content-between">
                                         <h3 className="h3">О себе</h3>
                                         {
@@ -75,8 +77,7 @@ const FullProfile = ({formData, compareShow, role}) => {
                                         )
                                         
                                    }
-                                   {
-                                        role=== "admin" || role==="spec" || role === undefined &&(
+                                  
                                              <div className="">
                                                   <h4 className="h4 mt-4">Компетенции</h4>
                                                   <div className="row ps-2">
@@ -94,9 +95,12 @@ const FullProfile = ({formData, compareShow, role}) => {
                                                        }
                                                   </div>
                                              </div>
-                                        )
-                                   }
+                                        
+                                   
                               </div>
+                                   )
+                              }
+                              
                          </div>
                          {
                               role != "employee" && role != "employer" && formData.service?.title && (
