@@ -11,11 +11,14 @@ import ProfileEditPage from './Pages/Profile/ProfileEditPage';
 import ProfileEditPageAbout from './Pages/Profile/ProfileEditPageAbout';
 import ProfileExperiens from './Pages/Profile/ProfileExperiens';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
 import Selection from './Pages/Selection';
 import ProfileShow from './Pages/Profile/ProfileShow';
 import ComparePage from './Pages/ComparePage';
 import ProfileServicePage from './Pages/Profile/ProfileServicePage';
+import ProfileVacancy from './Pages/Employer/ProfileVacancy';
+import AllVacancy from './Pages/Employer/AllVacancy';
+import VacancyShow from './Pages/Employer/VacancyShow';
+import AdminPage from './Pages/Admin/AdminPage';
 
 function App() {
   
@@ -201,15 +204,30 @@ function App() {
               {
                 role === 'admin' ? (
                   <div className="d-flex flex-row w-100 justify-content-center mt-4">
-                    <button onClick={() => handleSetRole('admin')}>Администратор</button>
+                    <a 
+                      onClick={() => handleSetRole('admin')}
+                      className="mt-3 rounded py-3 px-4 mx-2 bg-light-subtle border"
+                      role="button">
+                        Администратор
+                    </a>
                   </div>
                   
                 )
                 :
                   (
                     <div className="d-flex flex-row w-100 justify-content-between mt-4">
-                    <button onClick={() => handleSetRole('spec')}>Специалист</button>
-                    <button onClick={() => handleSetRole('employee')}>Работодатель</button>
+                    <a 
+                      onClick={() => handleSetRole('spec')}
+                      className="mt-3 rounded py-3 px-4 mx-2 bg-light-subtle border"
+                      role="button">
+                        Специалист
+                    </a>
+                    <a 
+                      onClick={() => handleSetRole('employer')}
+                      className="mt-3 rounded py-3 px-4 mx-2 bg-light-subtle border"
+                      role="button">
+                        Работодатель
+                    </a>
                     {/* <button>Пользователь</button> */}
                   </div>
                   )
@@ -226,7 +244,8 @@ function App() {
               path="/profile" 
               element={
               <ProfilePage 
-              formData={formData}/>} />
+              formData={formData}
+              role={role}/>} />
             <Route 
               path="/profile/edit/personal" 
               element={
@@ -270,6 +289,7 @@ function App() {
               <Selection
               addToCheck = {addToCheck}
               setAddToCheck = {setAddToCheck}
+              role = {role}
               />}
             />
             <Route
@@ -285,8 +305,38 @@ function App() {
               element={
               <ProfileShow/>}
             />
+            <Route 
+              path="/employer/vacancy" 
+              element={
+              <ProfileVacancy
+              formData={formData} 
+              onUserDataChange={handleUserDataChange } 
+              userKey={userKey}/>} />
+            <Route 
+              path="/show/vacancy" 
+              element={
+              <AllVacancy
+            />} />
+            <Route 
+              path="/show/vacancy" 
+              element={
+              <AllVacancy
+              formData={formData} 
+              onUserDataChange={handleUserDataChange } 
+              userKey={userKey}/>} />
+            <Route 
+              path="/show/vacancy/:id" 
+              element={
+              <VacancyShow
+              userKey={userKey}
+              />} />
+            <Route 
+              path="/admin/panel" 
+              element={
+              <AdminPage
+            />} />
           </Routes>
-          <button onClick={handleDeleteAllProfiles}>Delete all</button><br />
+          {/* <button onClick={handleDeleteAllProfiles}>Delete all</button><br /> */}
         </BrowserRouter>
       </div>
       

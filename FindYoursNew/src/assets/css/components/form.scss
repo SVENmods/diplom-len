@@ -1,0 +1,16 @@
+
+textarea{
+     max-height: 15rem;
+     min-height: 3rem;
+     resize: none;
+     padding: .5rem;
+}
+
+button#addNewSkill{
+     background: transparent;
+     font-size: 1.5rem;
+     transition: all ease-out .3s;
+     &:hover{
+               color: var(--color-link-hover);
+     }
+}

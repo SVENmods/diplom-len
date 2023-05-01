@@ -4,7 +4,7 @@ import DropdownButton from 'react-bootstrap/DropdownButton';
 import AuthenticationButton from '../buttons/AuthenticationButton';
 
 
-const HeaderProfile = ({userData}) => {
+const HeaderProfile = ({userData, role}) => {
      return (
           <div className="d-flex flex-row align-items-center">
                <a href="/profile" className="d-flex flex-row align-items-center">
@@ -16,6 +16,12 @@ const HeaderProfile = ({userData}) => {
                </a>
                <DropdownButton id="header-dropdown-button" className='ms-3' variant="none" title="">
                     <Dropdown.Item href='/profile'>Профиль</Dropdown.Item>
+                    {
+                    role === "admin" ? (
+                         <Dropdown.Item href='/admin/panel'>Администрирование</Dropdown.Item>
+                    )
+                    : null
+                    }
                     <Dropdown.Item><AuthenticationButton/></Dropdown.Item>
                </DropdownButton>
           </div>

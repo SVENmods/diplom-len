@@ -12,7 +12,7 @@ const Header = ({userData, role}) => {
                     <span className='ms-3'>FindYours</span>
                </a>
                <Nav role={role}/>
-               <HeaderProfile userData={userData}/>
+               <HeaderProfile userData={userData} role={role}/>
           </header>
      );
 }

@@ -3,6 +3,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import InputMask from "react-input-mask";
 import Select from "../../UI/select/Select";
+import { allSphere, allArea } from '../../data/category/dataCategory'
+import '../../assets/css/components/form.scss'
+
 
 const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
 
@@ -11,15 +14,6 @@ const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
      const [selectedSphere, setSelectedSphere] = useState("");
 
      const [newSkill, setNewSkill] = useState([])
-
-     const allSphere = ['Айти', 'Строительство', 'Транспорт, логистика', 'Финансы']
-
-     const allArea = {
-          'Айти' : ['Дизайн', 'Front-end', 'Back-end', 'Аналитика', 'DevOps', 'Верстка'],
-          'Строительство' : ['Архитектора', 'Разнрабочий',  'Монтаж', 'Сантехник', 'Электромонтаж',],
-          'Транспорт, логистика' : ['Водитель', 'Грузчик', 'Курьер', 'Начальник Склада', 'Упаковщик'],
-          'Финансы' : ['Брокер', 'Бухгалтер', 'Экономист', 'Аудитор', 'Кредитный специалист',], 
-     }
 
      const handleChange = (e) => {
      const { name, value } = e.target
@@ -87,46 +81,71 @@ const ProfileEditPageAbout = ({formData, onUserDataChange, userKey}) => {
      },[])
 
      return (
-          <main>
-               <form onSubmit={handleSubmit} className="d-flex flex-column">
-                    <div className="d-flex flex-row align-items-center border">
+          <main className="content-container mt-5">
+               <form onSubmit={handleSubmit} className="d-flex flex-column w-100">
+                    <div className="d-flex flex-column align-items-start">
                          <label htmlFor="about.text">О себе</label>
-                         <textarea type="text" value={formData?.about.text} name="about.text" id="about.text" onChange={handleChange}/>
+                         <textarea 
+                              type="text" 
+                              value={formData?.about.text} 
+                              name="about.text" 
+                              id="about.text" 
+                              onChange={handleChange}
+                              className="w-100 border rounded mt-2"/>
                     </div>
-                    <div className="d-flex flex-row align-items-center border">
-                         <Select
+                    <Select
                               options = {allSphere}
                               label = {"Выберите сферу"}
                               value = {formData.about.sphere}
                               onChange = {handleSphereChange}
                               name = {'about.sphere'}
+                              customClass = {"mt-3"}
+                              required={true}
                          />
-                    </div>
 
                     {allArea[formData.about.sphere] && (
-                    <div className="d-flex flex-row align-items-center border">
                          <Select
                               options = {allArea[formData.about.sphere]}
                               label = {"Выберите направление"}
                               value = {formData.about.area}
                               onChange = {handleAreaChange}
                               name = {'about.area'}
+                              customClass = {"mt-3"}
                          />
-                    </div>
                     )}
-                    <div className="d-flex flex-row align-items-center border">
+                    <div className="d-flex flex-column align-items-start mt-3 w-100">
                          <label htmlFor="newSkill">Профессиональнальные компетенции</label>
-                              <div className="d-flex flex-row flex-wrap border">
-                              {
-                                   formData?.about.skills?.map((skill, idx) => (
-                                        <div key={idx} className="border profile-skill" onClick={() => handleRemoveSkill(skill)}>{skill}</div>
-                                   ))
-                              }
+                         <div className="d-flex flex-column mt-2 w-100">
+                              <div className="d-flex flex-row flex-wrap">
+                                   {
+                                        formData?.about.skills
+                                        ?.map((skill, idx) => (
+                                             <div 
+                                                  key={idx} 
+                                                  className="me-2 my-1 text-center" 
+                                                  >
+                                                       <div 
+                                                            className="border profile-skill d-flex text-center p-2 rounded "
+                                                            >
+                                                            <span className="">{skill}</span>
+                                                            <a
+                                                                 className="bi bi-x-square ms-2 fs-5 pe-auto" 
+                                                                 onClick={() => handleRemoveSkill(skill)}></a>
+                                                       </div>
+                                             </div>
+                                        ))
+                                   }
                               </div>
-                         <input type="text" name="newSkill" id="newSkill" placeholder="Введите навык" />
-                         <button type="button" onClick={handleAddSkill} id="addNewSkill" className=""><i className="bi bi-check2"></i></button>
+                              <div className="d-flex flex-row border rounded py-1 px-2 pe-1 mt-2 w-100">
+                                   <input type="text" name="newSkill" id="newSkill" placeholder="Введите навык" className="w-100"/>
+                                   <button type="button" onClick={handleAddSkill} id="addNewSkill" className="ms-2"><i className="bi bi-check-square"></i></button>
+                              </div>
+                         </div>
                     </div>
-                    <input type="submit" value="submit" />
+                    <div className="d-flex justify-content-center w-100">
+                         <input type="submit" value="Сохранить" id="formSumbit" className="mt-3 rounded py-3 px-4 mx-2"/>
+                         <a href="/profile" className="mt-3 rounded py-3 px-4 mx-2 bg-light-subtle border">Вернуться без изменений</a>
+                    </div>
                </form>
                
           </main>

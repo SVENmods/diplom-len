@@ -5,7 +5,7 @@ import { allSphere, allArea } from '../../data/category/dataCategory'
 import Select from "../../UI/select/Select";
 import ContentLoader from "../../UI/ContentLoader";
 
-const ProfileServicePage = ({formData, userKey, editMode}) => {
+const ProfileVacancy = ({formData, userKey, editMode}) => {
      const navigate = useNavigate()
 
      const { id } = useParams();
@@ -14,10 +14,14 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
 
      const [newService, setnewService] = useState({
           title: '',
-          sphere: '',
+          company: '',
           about: '',
-          area: '',
+          contacts: '',
           status: '',
+          money: '',
+          sphere: '',
+          area: '',
+          reply:[],
      })
 
 
@@ -26,7 +30,7 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
           try {
                const updatedFormData = {
                     ...formData,
-                    service: {
+                    vacancy: {
                          ...newService
                     }
                };
@@ -65,8 +69,8 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
      };
 
      useEffect(()=>{
-          if (formData.service) {
-               setnewService(formData.service);
+          if (formData.vacancy) {
+               setnewService(formData.vacancy);
           }
      },[id, formData.service])
 
@@ -80,11 +84,11 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
           <main className="content-container mt-5">
                <form onSubmit={handleSubmit} className="d-flex flex-column w-100">
                     {
-                         newService.title? (
-                              <h1 className="h1">Изменение услуги</h1>
+                         formData?.vacancy?.title ? (
+                              <h1 className="h1">Изменение вакансии</h1>
                          )
                          : (
-                              <h1 className="h1">Создание услуги</h1>
+                              <h1 className="h1">Создание вакансии</h1>
                          )
                     }
                     <div className="d-flex flex-column">
@@ -94,6 +98,16 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
                               value={newService?.title} 
                               name="title" 
                               id="title" 
+                              onChange={handleChange}
+                              className="w-100 border py-1 px-2 mt-2 rounded"/>
+                    </div>
+                    <div className="d-flex flex-column">
+                         <label htmlFor="company">Название компании</label>
+                         <input 
+                              type="text" 
+                              value={newService?.company} 
+                              name="company" 
+                              id="company" 
                               onChange={handleChange}
                               className="w-100 border py-1 px-2 mt-2 rounded"/>
                     </div>
@@ -116,7 +130,7 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
                          />
                     )}
                     <div className="d-flex flex-column flex-wrap align-items-start justify-content-between mb-1 w-100 mt-3">
-                         <label htmlFor="status">Статус услуги</label>
+                         <label htmlFor="status">Статус вакансии</label>
                          <select 
                               name="status" 
                               id="status" 
@@ -130,12 +144,32 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
                          </select>
                     </div>
                     <div className="d-flex flex-column mt-3">
-                         <label htmlFor="about">Кратко о услуге</label>
+                         <label htmlFor="about">Кратко о вакансии</label>
                          <textarea 
                               type="text" 
                               value={newService?.about} 
                               name="about" 
                               id="about" 
+                              onChange={handleChange}
+                              className="w-100 border py-1 px-2 mt-2 rounded"/>
+                    </div>
+                    <div className="d-flex flex-column mt-3">
+                         <label htmlFor="company">Зарплата(в рублях)</label>
+                         <input 
+                              type="text" 
+                              value={newService?.money} 
+                              name="money" 
+                              id="money" 
+                              onChange={handleChange}
+                              className="w-100 border py-1 px-2 mt-2 rounded"/>
+                    </div>
+                    <div className="d-flex flex-column mt-3">
+                         <label htmlFor="company">Контактные данные</label>
+                         <input 
+                              type="text" 
+                              value={newService?.contacts} 
+                              name="contacts" 
+                              id="contacts" 
                               onChange={handleChange}
                               className="w-100 border py-1 px-2 mt-2 rounded"/>
                     </div>
@@ -147,4 +181,4 @@ const ProfileServicePage = ({formData, userKey, editMode}) => {
           </main>
      );
 }
-export default ProfileServicePage;
+export default ProfileVacancy;
