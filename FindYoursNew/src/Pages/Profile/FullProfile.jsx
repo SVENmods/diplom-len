@@ -15,7 +15,7 @@ const FullProfile = ({formData, compareShow, role}) => {
                <div className="row">
                     <div className="row col-md-8 h-100">
                          <div className="col-md-6">
-                              <div className="content-box h-100">
+                              <div className="content-box">
                                    <div className="d-flex flex-row justify-content-between">
                                         <div className="">
                                              <h3 className="h3">{formData?.name} <br /> {formData?.family_name}</h3>
@@ -55,7 +55,7 @@ const FullProfile = ({formData, compareShow, role}) => {
 
                          </div>
                          <div className="col-md-6">
-                              <div className="content-box h-100">
+                              <div className="content-box">
                                    <div className="d-flex flex-row w-100 justify-content-between">
                                         <h3 className="h3">О себе</h3>
                                         {
@@ -211,7 +211,7 @@ const FullProfile = ({formData, compareShow, role}) => {
                          }
                     </div>
                     <div className="col-md-4 h-100">
-                         <div className="content-box h-100">
+                         <div className="content-box">
                               <div className="d-flex flex-row justify-content-between">
                                         <h3 className="h3">Опыт работы</h3>
                                         {
