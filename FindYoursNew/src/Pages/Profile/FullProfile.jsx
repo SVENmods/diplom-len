@@ -2,6 +2,7 @@ import AllReplyView from '../../UI/output/AllReplyView';
 import ProfileViewExperiens from '../../UI/output/ProfileViewExperiens';
 
 const FullProfile = ({formData, compareShow, role}) => {
+     console.log("role", role)
      return (
           <main className="content-container mt-5">
                {
@@ -92,7 +93,7 @@ const FullProfile = ({formData, compareShow, role}) => {
                               </div>
                          </div>
                          {
-                              role != "employee" || role != "employer" && (
+                              role != "employee" && role != "employer" && formData.service?.title && (
                                         <div className="col-md-12 ">
                                              <div className="content-box mt-4 h-100">
                                                   <div className="d-flex flex-row flex-wrap w-100 justify-content-between">
@@ -210,22 +211,28 @@ const FullProfile = ({formData, compareShow, role}) => {
                               : null
                          }
                     </div>
+                    
                     <div className="col-md-4 h-100">
-                         <div className="content-box">
-                              <div className="d-flex flex-row justify-content-between">
-                                        <h3 className="h3">Опыт работы</h3>
-                                        {
-                                             !compareShow && (
-                                                  <a href="/profile/add/experiens" className="text-primary">Добавить</a>
-                                             )
-                                        }
-                                        
-                              </div>
-                              <ProfileViewExperiens profileData={formData} compareShow={compareShow}/>
-                         </div>
+                         {
+                              role != "employee" && role != "employer" && (
+                                   <div className="content-box mb-4">
+                                        <div className="d-flex flex-row justify-content-between">
+                                                  <h3 className="h3">Опыт работы</h3>
+                                                  {
+                                                       !compareShow && (
+                                                            <a href="/profile/add/experiens" className="text-primary">Добавить</a>
+                                                       )
+                                                  }
+                                                  
+                                        </div>
+                                        <ProfileViewExperiens profileData={formData} compareShow={compareShow}/>
+                                   </div>
+                              )
+                         }
+                         
                          {
                               role === "employee" || role === "admin" || role === "employer" && !compareShow ? (
-                                   <div className="content-box h-100 mt-4">
+                                   <div className="content-box h-100">
                                         <div className="d-flex flex-row justify-content-between">
                                                   <h3 className="h3">Отклики</h3>
                                         </div>

@@ -5,7 +5,7 @@ const LoginButton = () => {
   const { loginWithRedirect } = useAuth0();
 
   return (
-    <div className="header-nav" onClick={() => loginWithRedirect()}>
+    <div className="header-nav" onClick={() => loginWithRedirect()} role="button">
       {/* <svg width="37" height="38" viewBox="0 0 37 38" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_201_26)">
           <path d="M8.0168 16.4607C7.67642 16.4607 7.40015 16.7445 7.40015 17.094V20.8941C7.40015 21.2437 7.67642 21.5275 8.0168 21.5275C8.35718 21.5275 8.63346 21.2437 8.63346 20.8941V17.094C8.63353 16.7445 8.35725 16.4607 8.0168 16.4607Z" fill="black" />
