@@ -75,21 +75,27 @@ const FullProfile = ({formData, compareShow, role}) => {
                                         )
                                         
                                    }
-                                   <h4 className="h4 mt-4">Компетенции</h4>
-                                   <div className="row ps-2">
-                                        {
-                                             formData?.about?.skills?.map((skill, idx) => (
-                                                  <div key={idx} 
-                                                       className="border col-md-auto 
-                                                            mx-1 my-1 d-flex 
-                                                            align-items-center 
-                                                            justify-content-center p-1 
-                                                            profile-skill">
-                                                       {skill}
+                                   {
+                                        role=== "admin" || role==="spec" || role === undefined &&(
+                                             <div className="">
+                                                  <h4 className="h4 mt-4">Компетенции</h4>
+                                                  <div className="row ps-2">
+                                                       {
+                                                            formData?.about?.skills?.map((skill, idx) => (
+                                                                 <div key={idx} 
+                                                                      className="border col-md-auto 
+                                                                           mx-1 my-1 d-flex 
+                                                                           align-items-center 
+                                                                           justify-content-center p-1 
+                                                                           profile-skill">
+                                                                      {skill}
+                                                                 </div>
+                                                            ))
+                                                       }
                                                   </div>
-                                             ))
-                                        }
-                                   </div>
+                                             </div>
+                                        )
+                                   }
                               </div>
                          </div>
                          {
