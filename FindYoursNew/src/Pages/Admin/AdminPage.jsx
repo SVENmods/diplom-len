@@ -17,10 +17,12 @@ const AdminPage = () => {
            // Сбор данных о сферах
           const spheres = Object.keys(usersData).reduce((acc, userID) => {
                const sphere = usersData[userID].about.sphere;
-               if (acc[sphere]) {
-                    acc[sphere]++;
-               } else {
-               acc[sphere] = 1;
+               if (sphere !== undefined) {
+                    if (acc[sphere]) {
+                         acc[sphere]++;
+                    } else {
+                         acc[sphere] = 1;
+                    }
                }
                return acc;
           }, {});
@@ -30,10 +32,12 @@ const AdminPage = () => {
           const skills = Object.keys(usersData).reduce((acc, userID) => {
                const userSkills = usersData[userID].about.skills;
                userSkills.forEach((skill) => {
-                    if (acc[skill]) {
-                         acc[skill]++;
-                    } else {
-                         acc[skill] = 1;
+                    if (skill !== undefined) {
+                         if (acc[skill]) {
+                              acc[skill]++;
+                         } else {
+                              acc[skill] = 1;
+                         }
                     }
                });
                return acc;
@@ -53,7 +57,7 @@ const AdminPage = () => {
      <main className="content-container mt-5 row">
           <div className="content-box">
                <h1 className="h1">Графики</h1>
-               <div className="row w-50">
+               <div className="row w-100">
                     <div className="col-md-4 p-3">
                     {Object.keys(spheresData).length > 0 && (
                          <Pie
@@ -98,7 +102,7 @@ const AdminPage = () => {
                               labels: Object.keys(skillsData),
                               datasets: [
                               {
-                                   label: "Навыки",
+                                   label: "Копетенции",
                                    data: Object.values(skillsData),
                                    backgroundColor: [
                                         "#ff6384",
