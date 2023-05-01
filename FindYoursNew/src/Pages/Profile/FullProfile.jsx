@@ -57,7 +57,8 @@ const FullProfile = ({formData, compareShow, role}) => {
                          </div>
                          <div className="col-md-6">
                               {
-                                   role=== "admin" || role==="spec" || role === undefined && (
+                                   role=== "admin" || role==="spec" || role === undefined ?
+                                   (
                                         <div className="content-box">
                                    <div className="d-flex flex-row w-100 justify-content-between">
                                         <h3 className="h3">О себе</h3>
@@ -77,79 +78,78 @@ const FullProfile = ({formData, compareShow, role}) => {
                                         )
                                         
                                    }
-                                  
-                                             <div className="">
-                                                  <h4 className="h4 mt-4">Компетенции</h4>
-                                                  <div className="row ps-2">
-                                                       {
-                                                            formData?.about?.skills?.map((skill, idx) => (
-                                                                 <div key={idx} 
-                                                                      className="border col-md-auto 
-                                                                           mx-1 my-1 d-flex 
-                                                                           align-items-center 
-                                                                           justify-content-center p-1 
-                                                                           profile-skill">
-                                                                      {skill}
-                                                                 </div>
-                                                            ))
-                                                       }
-                                                  </div>
-                                             </div>
-                                        
-                                   
-                              </div>
-                                   )
-                              }
-                              
-                         </div>
-                         {
-                              role != "employee" && role != "employer" && formData.service?.title && (
-                                        <div className="col-md-12 ">
-                                             <div className="content-box mt-4 h-100">
-                                                  <div className="d-flex flex-row flex-wrap w-100 justify-content-between">
-                                                  {
-                                                       compareShow ? (
-                                                            <h3 className="h3">Оказываемая услуга</h3>
-                                                       )
-                                                       : (
-                                                            <h3 className="h3">Ваша услуга</h3>
-                                                       )
-                                                  }
-                                                       {
-                                                            !compareShow && (
-                                                                 <a href="/profile/service" className="ms-3 text-primary">
-                                                                      Изменить
-                                                                 </a>
-                                                            )
-                                                       }
-                                                       
-                                                  </div>
-                                                  <div className="d-flex">
-                                                       {
-                                                            formData.service?.title && (
-                                                                 <div className="d-flex flex-column align-items-start">
-                                                                      <div className="d-flex flex-row align-items-start">
-                                                                           <h5 className="h5">
-                                                                                {formData.service?.title}
-                                                                           </h5>
-                                                                           <div className="border border-primary py-1 px-3 d-flex align-items-center ms-3 pe-none border-2">
-                                                                                {formData.service?.sphere}
-                                                                           </div>
-                                                                      </div>
-                                                            
-                                                                      <div className="d-flex flex-column mt-3">
-                                                                           <strong>Описание:</strong>
-                                                                           <p className='mt-2'>
-                                                                                {formData.service?.about}
-                                                                           </p>
-                                                                      </div>
-                                                                 </div>
-                                                            )
-                                                       }
-                                                  </div>
-                                             </div>
+                                   <div className="">
+                                        <h4 className="h4 mt-4">Компетенции</h4>
+                                        <div className="row ps-2">
+                                             {
+                                                  formData?.about?.skills?.map((skill, idx) => (
+                                                       <div key={idx} 
+                                                            className="border col-md-auto 
+                                                                 mx-1 my-1 d-flex 
+                                                                 align-items-center 
+                                                                 justify-content-center p-1 
+                                                                 profile-skill">
+                                                            {skill}
+                                                       </div>
+                                                  ))
+                                             }
+                                        </div>
+                                   </div>
                               </div>
                               )
+                              : null
+                              }
+                         </div>
+                         {
+                              role === "spec" || role === undefined ?
+                              (
+                                   <div className="col-md-12 ">
+                                        <div className="content-box mt-4 h-100">
+                                             <div className="d-flex flex-row flex-wrap w-100 justify-content-between">
+                                             {
+                                                  compareShow ? (
+                                                       <h3 className="h3">Оказываемая услуга</h3>
+                                                  )
+                                                  : (
+                                                       <h3 className="h3">Ваша услуга</h3>
+                                                  )
+                                             }
+                                                  {
+                                                       !compareShow && (
+                                                            <a href="/profile/service" className="ms-3 text-primary">
+                                                                 Изменить
+                                                            </a>
+                                                       )
+                                                  }
+                                                  
+                                             </div>
+                                             <div className="d-flex">
+                                                  {
+                                                       formData.service?.title && (
+                                                            <div className="d-flex flex-column align-items-start">
+                                                                 <div className="d-flex flex-row align-items-start">
+                                                                      <h5 className="h5">
+                                                                           {formData.service?.title}
+                                                                      </h5>
+                                                                      <div className="border border-primary py-1 px-3 d-flex align-items-center ms-3 pe-none border-2">
+                                                                           {formData.service?.sphere}
+                                                                      </div>
+                                                                 </div>
+                                                       
+                                                                 <div className="d-flex flex-column mt-3">
+                                                                      <strong>Описание:</strong>
+                                                                      <p className='mt-2'>
+                                                                           {formData.service?.about}
+                                                                      </p>
+                                                                 </div>
+                                                            </div>
+                                                       )
+                                                  }
+                                             </div>
+                                        </div>
+                         </div>
+                         )
+                         : null
                          }
                          {
                               role === "employee" || role === "admin" || role === "employer" ? (
