@@ -92,7 +92,7 @@ const FullProfile = ({formData, compareShow, role}) => {
                               </div>
                          </div>
                          {
-                              role != "employee" && (
+                              role != "employee" || role != "employer" && (
                                         <div className="col-md-12 ">
                                              <div className="content-box mt-4 h-100">
                                                   <div className="d-flex flex-row flex-wrap w-100 justify-content-between">
@@ -141,7 +141,7 @@ const FullProfile = ({formData, compareShow, role}) => {
                               )
                          }
                          {
-                              role === "employee" || role === "admin" ? (
+                              role === "employee" || role === "admin" || role === "employer" ? (
                                    <div className="col-md-12 mt-3">
                                         <div className="content-box mt-4 h-100">
                                              <div className="d-flex flex-row flex-wrap w-100 justify-content-between">
@@ -224,7 +224,7 @@ const FullProfile = ({formData, compareShow, role}) => {
                               <ProfileViewExperiens profileData={formData} compareShow={compareShow}/>
                          </div>
                          {
-                              role === "employee" || role === "admin" && !compareShow ? (
+                              role === "employee" || role === "admin" || role === "employer" && !compareShow ? (
                                    <div className="content-box h-100 mt-4">
                                         <div className="d-flex flex-row justify-content-between">
                                                   <h3 className="h3">Отклики</h3>
