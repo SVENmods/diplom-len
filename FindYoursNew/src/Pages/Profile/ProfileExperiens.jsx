@@ -212,7 +212,7 @@ const ProfileAddExperiens = ({formData, userKey, editMode}) => {
                                    }
                               </div>
                                    <div className="d-flex flex-row border rounded py-1 px-2 pe-1 mt-2 w-100">
-                                        <input type="text" name="newSkill" id="newSkill" placeholder="Введите навык" className="w-100"/>
+                                        <input type="text" name="newSkill" id="newSkill" placeholder="Введите компетенцию" className="w-100"/>
                                         <button type="button" onClick={handleAddSkill} id="addNewSkill" className="ms-2"><i className="bi bi-check-square"></i></button>
                                    </div>
                               </div>
