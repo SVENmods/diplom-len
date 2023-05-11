@@ -298,6 +298,7 @@ function App() {
               <ComparePage
               addToCheck = {addToCheck}
               setAddToCheck = {setAddToCheck}
+              userKey={userKey}
               />}
             />
             <Route

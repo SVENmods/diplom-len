@@ -12,6 +12,8 @@ const ProfileVacancy = ({formData, userKey, editMode}) => {
      
      const [selectedSphere, setSelectedSphere] = useState("");
 
+     const [newSkill, setNewSkill] = useState([])
+
      const [newService, setnewService] = useState({
           title: '',
           company: '',
@@ -22,6 +24,7 @@ const ProfileVacancy = ({formData, userKey, editMode}) => {
           sphere: '',
           area: '',
           reply:[],
+          skills:[],
      })
 
 
@@ -68,6 +71,26 @@ const ProfileVacancy = ({formData, userKey, editMode}) => {
           }))
      };
 
+     const handleAddSkill = () => {
+          const newSkillValue = document.querySelector("#newSkill").value;
+          if (newSkillValue) {
+               setNewSkill([...newSkill, newSkillValue]);
+               setnewService((prevState) => ({
+                    ...prevState,
+                    skills: prevState.skills ? [...prevState.skills, newSkillValue] : [newSkillValue],
+               }))
+               document.querySelector("#newSkill").value = '';
+          }
+     }
+
+     const handleRemoveSkill = (skillToRemove) => {
+          setNewSkill(newSkill.filter(skill => skill !== skillToRemove));
+          setnewService((prevState) => ({
+               ...prevState,
+               skills: prevState.skills ? prevState.skills.filter(skill => skill !== skillToRemove) : [],
+          }))
+     }
+
      useEffect(()=>{
           if (formData.vacancy) {
                setnewService(formData.vacancy);
@@ -101,7 +124,7 @@ const ProfileVacancy = ({formData, userKey, editMode}) => {
                               onChange={handleChange}
                               className="w-100 border py-1 px-2 mt-2 rounded"/>
                     </div>
-                    <div className="d-flex flex-column">
+                    <div className="d-flex flex-column mt-3">
                          <label htmlFor="company">Название компании</label>
                          <input 
                               type="text" 
@@ -172,6 +195,34 @@ const ProfileVacancy = ({formData, userKey, editMode}) => {
                               id="contacts" 
                               onChange={handleChange}
                               className="w-100 border py-1 px-2 mt-2 rounded"/>
+                    </div>
+                    <div className="d-flex flex-column align-items-start mt-3 w-100">
+                         <label htmlFor="newSkill">Профессиональнальные компетенции</label>
+                         <div className="d-flex flex-column mt-2 w-100">
+                              <div className="d-flex flex-row flex-wrap">
+                                   {
+                                        newService?.skills?.map((skill, idx) => (
+                                             <div 
+                                                  key={idx} 
+                                                  className="me-2 my-1 text-center" 
+                                                  >
+                                                       <div 
+                                                            className="border profile-skill d-flex text-center p-2 rounded "
+                                                            >
+                                                            <span className="">{skill}</span>
+                                                            <a
+                                                                 className="bi bi-x-square ms-2 fs-5 pe-auto" 
+                                                                 onClick={() => handleRemoveSkill(skill)}></a>
+                                                       </div>
+                                             </div>
+                                        ))
+                                   }
+                              </div>
+                              <div className="d-flex flex-row border rounded py-1 px-2 pe-1 mt-2 w-100">
+                                   <input type="text" name="newSkill" id="newSkill" placeholder="Введите компетенцию" className="w-100"/>
+                                   <button type="button" onClick={handleAddSkill} id="addNewSkill" className="ms-2"><i className="bi bi-check-square"></i></button>
+                              </div>
+                         </div>
                     </div>
                     <div className="d-flex justify-content-center w-100">
                               <input type="submit" value="Сохранить" id="formSumbit" className="mt-3 rounded py-3 px-4 mx-2"/>
