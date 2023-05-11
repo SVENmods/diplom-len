@@ -71,13 +71,17 @@ const ComparePage = ({userKey}) => {
                                    <div className="row">
                                         {user.about.skills.map((skill) => (
                                         <span
-                                             key={skill}
-                                             className={
-                                             "border col-md-auto mx-1 d-flex align-items-center justify-content-center p-1 my-1" +
-                                             (formData.vacancy?.skills.includes(skill) ? " bg-warning" : "")
+                                        key={skill}
+                                        className={
+                                                  "border col-md-auto mx-1 d-flex align-items-center justify-content-center p-1 my-1" +
+                                                  (formData.vacancy?.skills.some(
+                                                  (s) => s.trim() === skill.trim()
+                                                  )
+                                                  ? " bg-warning"
+                                                  : "")
                                              }
                                         >
-                                             {skill}
+                                        {skill}
                                         </span>
                                         ))}
                                    </div>
